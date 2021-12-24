@@ -156,4 +156,7 @@ int main()
     graphics->setBgFilename(backgroundImg);
     graphics->setTrafficObjects(trafficObjects);
     graphics->simulate();
+
+    delete graphics ;
+    return 0;
 }
