@@ -25,15 +25,15 @@ void createTrafficObjects_Paris(std::vector<std::shared_ptr<Street>> &streets, s
     }
 
     // position intersections in pixel coordinates (counter-clockwise)
-    intersections.at(0)->setPosition(385, 270);
-    intersections.at(1)->setPosition(1240, 80);
-    intersections.at(2)->setPosition(1625, 75);
-    intersections.at(3)->setPosition(2110, 75);
-    intersections.at(4)->setPosition(2840, 175);
-    intersections.at(5)->setPosition(3070, 680);
-    intersections.at(6)->setPosition(2800, 1400);
-    intersections.at(7)->setPosition(400, 1100);
-    intersections.at(8)->setPosition(1700, 900); // central plaza
+    intersections.at(0)->setPosition(130,428);
+    intersections.at(1)->setPosition(148,94);
+    intersections.at(2)->setPosition(478,20);
+    intersections.at(3)->setPosition(630,14);
+    intersections.at(4)->setPosition(830,18);
+    intersections.at(5)->setPosition(1102,61);
+    intersections.at(6)->setPosition(1195,252);
+    intersections.at(7)->setPosition(1055,537);
+    intersections.at(8)->setPosition(662,345);  // central plaza
 
     // create streets and connect traffic objects
     int nStreets = 8;
@@ -68,12 +68,12 @@ void createTrafficObjects_NYC(std::vector<std::shared_ptr<Street>> &streets, std
     }
 
     // position intersections in pixel coordinates
-    intersections.at(0)->setPosition(1430, 625);
-    intersections.at(1)->setPosition(2575, 1260);
-    intersections.at(2)->setPosition(2200, 1950);
-    intersections.at(3)->setPosition(1000, 1350);
-    intersections.at(4)->setPosition(400, 1000);
-    intersections.at(5)->setPosition(750, 250);
+    intersections.at(0)->setPosition(852,440);
+    intersections.at(1)->setPosition(732,693);
+    intersections.at(2)->setPosition(475,224);
+    intersections.at(3)->setPosition(347,473);
+    intersections.at(4)->setPosition(129,344);
+    intersections.at(5)->setPosition(256,91);
 
     // create streets and connect traffic objects
     int nStreets = 7;
