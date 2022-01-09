@@ -51,7 +51,7 @@ void Graphics::drawTrafficObjects()
 
             // set color according to traffic light and draw the intersection as a circle
             cv::Scalar trafficLightColor = intersection->trafficLightIsGreen() == true ? cv::Scalar(0, 255, 0) : cv::Scalar(0, 0, 255);
-            cv::circle(_images.at(1), cv::Point2d(posx, posy), 25, trafficLightColor, -1);
+            cv::circle(_images.at(1), cv::Point2d(posx, posy), 15, trafficLightColor, -1);
         }
         else if (it->getType() == ObjectType::objectVehicle)
         {
@@ -60,7 +60,7 @@ void Graphics::drawTrafficObjects()
             int g = rng.uniform(0, 255);
             int r = sqrt(255*255 - g*g - b*b); // ensure that length of color vector is always 255
             cv::Scalar vehicleColor = cv::Scalar(b,g,r);
-            cv::circle(_images.at(1), cv::Point2d(posx, posy), 50, vehicleColor, -1);
+            cv::circle(_images.at(1), cv::Point2d(posx, posy), 7, vehicleColor, -1);
         }
     }
 
