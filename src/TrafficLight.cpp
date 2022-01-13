@@ -76,6 +76,7 @@ void TrafficLight::cycleThroughPhases()
     std::chrono::time_point<std::chrono::system_clock> lastUpdate;  
 
     lastUpdate = std::chrono::system_clock::now();
+    auto val = rand() % 2 + 4 ;
 
     while(1){
 
@@ -83,14 +84,15 @@ void TrafficLight::cycleThroughPhases()
         long timeSinceLastUpdate = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now() - lastUpdate).count();
         
 
-        if(timeSinceLastUpdate > 4 && timeSinceLastUpdate < 6){
+        if(timeSinceLastUpdate > val){
             if(_currentPhase == TrafficLightPhase::green){
                 _currentPhase = TrafficLightPhase::red ;
             }else {
                 _currentPhase = TrafficLightPhase::green;
             }
             _messageQueue.send(std::move(_currentPhase));
-            lastUpdate = std::chrono::system_clock::now() ;
+            lastUpdate = std::chrono::system_clock::now();
+            val = rand() % 2 + 4 ;
         }
 
     }
