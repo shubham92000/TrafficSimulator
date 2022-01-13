@@ -10,6 +10,9 @@ class Graphics
 {
 public:
     // constructor / desctructor
+    ~Graphics(){
+        std::cout << "Graphics destructor " << std::endl;
+    }
 
     // getters / setters
     void setBgFilename(std::string filename) { _bgFilename = filename; }
