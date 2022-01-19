@@ -112,9 +112,9 @@ int main()
     std::vector<std::shared_ptr<Vehicle>> vehicles;
     std::string backgroundImg;
     int nVehicles = 6;
-    std::cout << "a" << std::endl;
-    // createTrafficObjects_Paris(streets, intersections, vehicles, backgroundImg, nVehicles , terminate);
-    createTrafficObjects_NYC(streets, intersections, vehicles, backgroundImg, nVehicles);
+    
+    createTrafficObjects_Paris(streets, intersections, vehicles, backgroundImg, nVehicles , terminate);
+    // createTrafficObjects_NYC(streets, intersections, vehicles, backgroundImg, nVehicles);
 
 
     std::for_each(intersections.begin(), intersections.end(), [](std::shared_ptr<Intersection> &i) {
