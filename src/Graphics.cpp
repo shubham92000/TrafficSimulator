@@ -16,6 +16,8 @@ void Graphics::simulate()
         // update graphics
         this->drawTrafficObjects();
     }
+
+    terminate->TerminateProcess();
 }
 
 void Graphics::loadBackgroundImg()

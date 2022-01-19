@@ -6,6 +6,9 @@
 class Terminate {
 public :
     Terminate() ;
+    ~Terminate() {
+        std::cout << "terminate destructor" << std::endl;
+    };
     void TerminateProcess() ;
     bool isTerminated() ;
 

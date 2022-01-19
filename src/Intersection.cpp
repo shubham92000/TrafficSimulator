@@ -141,6 +141,10 @@ void Intersection::processVehicleQueue()
         // sleep at every iteration to reduce CPU usage
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
+        if(terminate->isTerminated()){
+            break ;
+        }
+
         // only proceed when at least one vehicle is waiting in the queue
         if (_waitingVehicles.getSize() > 0 && !_isBlocked)
         {

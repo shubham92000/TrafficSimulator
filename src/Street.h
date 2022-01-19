@@ -11,6 +11,9 @@ class Street : public TrafficObject, public std::enable_shared_from_this<Street>
 public:
     // constructor / desctructor
     Street();
+    ~Street(){
+        std::cout << "street destructor " << std::endl;
+    };
 
     // getters / setters
     double getLength() { return _length; }

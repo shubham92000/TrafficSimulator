@@ -10,12 +10,19 @@ class Graphics
 {
 public:
     // constructor / desctructor
-    // ~Graphics(){
-    //     for(auto & tr : _trafficObjects){
-    //         std::cout  << tr.use_count() << std::endl;
-    //     }
-    //     std::cout << "Graphics destructor " << std::endl;
-    // }
+
+    Graphics(){}
+
+    Graphics(Terminate * terminate){
+        this->terminate = terminate ;
+    }
+
+    ~Graphics(){
+        // for(auto & tr : _trafficObjects){
+        //     std::cout  << tr.use_count() << std::endl;
+        // }
+        std::cout << "Graphics destructor " << std::endl;
+    }
 
     // getters / setters
     void setBgFilename(std::string filename) { _bgFilename = filename; }
@@ -37,6 +44,7 @@ private:
     std::string _bgFilename;
     std::string _windowName;
     std::vector<cv::Mat> _images;
+    Terminate * terminate ;
 };
 
 #endif

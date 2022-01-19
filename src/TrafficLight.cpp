@@ -73,7 +73,13 @@ void TrafficLight::cycleThroughPhases()
     while(1){
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1)) ;
+
+        if(terminate->isTerminated()){
+            break ;
+        }
+
         long timeSinceLastUpdate = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now() - lastUpdate).count();
+        // todo change to float last update
         
 
         if(timeSinceLastUpdate > val){

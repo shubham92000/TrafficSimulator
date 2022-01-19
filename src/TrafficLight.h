@@ -34,7 +34,9 @@ public:
     // constructor / desctructor
     TrafficLight() ;
     TrafficLight(Terminate *) ;
-    ~TrafficLight(){} ;
+    ~TrafficLight(){
+        std::cout << "traffic light " << std::endl ;
+    } ;
 
     // getters / setters
 

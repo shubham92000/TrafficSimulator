@@ -137,14 +137,14 @@ int main()
         trafficObjects.push_back(trafficObject);
     });
 
-    Graphics * graphics = new Graphics;
+    Graphics * graphics = new Graphics(terminate);
 
     graphics->setBgFilename(backgroundImg);
     graphics->setTrafficObjects(trafficObjects);
 
     graphics->simulate();
 
-    // delete graphics;
+    delete graphics;
     delete terminate;
 
     return 0;
