@@ -8,7 +8,7 @@
 void Graphics::simulate()
 {
     this->loadBackgroundImg();
-    while (true)
+    while (cv::waitKey(33)!=27)
     {
         // sleep at every iteration to reduce CPU usage
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
@@ -69,5 +69,9 @@ void Graphics::drawTrafficObjects()
 
     // display background and overlay image
     cv::imshow(_windowName, _images.at(2));
-    cv::waitKey(33);
+    // int key = cv::waitKey(33);
+
+    // if(key != -1){
+    //     std::cout << "key " <<  key << std::endl ;
+    // }
 }

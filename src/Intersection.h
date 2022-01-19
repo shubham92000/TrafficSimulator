@@ -35,6 +35,10 @@ class Intersection : public TrafficObject
 public:
     // constructor / desctructor
     Intersection();
+    Intersection(Terminate *);
+    ~Intersection(){
+        std::cout << "intersection destructor " << std::endl;
+    };
 
     // getters / setters
     void setIsBlocked(bool isBlocked);
@@ -56,7 +60,7 @@ private:
     std::vector<std::shared_ptr<Street>> _streets;   // list of all streets connected to this intersection
     WaitingVehicles _waitingVehicles; // list of all vehicles and their associated promises waiting to enter the intersection
     bool _isBlocked;                  // flag indicating wether the intersection is blocked by a vehicle
-    TrafficLight _trafficLight;
+    TrafficLight *_trafficLight; 
 };
 
 #endif

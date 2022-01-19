@@ -32,4 +32,5 @@ TrafficObject::~TrafficObject()
     std::for_each(threads.begin(), threads.end(), [](std::thread &t) {
         t.join();
     });
+    std::cout << "TrafficObject destructor " << std::endl;
 }

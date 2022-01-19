@@ -31,6 +31,14 @@ void MessageQueue<T>::send(T &&msg)
 TrafficLight::TrafficLight()
 {
     _currentPhase = TrafficLightPhase::red;
+    this->terminate = nullptr ;
+}
+
+
+TrafficLight::TrafficLight(Terminate * terminate)
+{
+    _currentPhase = TrafficLightPhase::red;
+    this->terminate = terminate ;
 }
 
 void TrafficLight::waitForGreen()

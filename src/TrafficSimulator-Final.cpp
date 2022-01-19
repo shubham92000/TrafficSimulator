@@ -6,6 +6,7 @@
 #include "Street.h"
 #include "Intersection.h"
 #include "Graphics.h"
+#include "Terminate.h"
 
 
 // NYC
@@ -63,14 +64,14 @@ void createTrafficObjects_NYC(std::vector<std::shared_ptr<Street>> &streets, std
 
 
 // Paris
-void createTrafficObjects_Paris(std::vector<std::shared_ptr<Street>> &streets, std::vector<std::shared_ptr<Intersection>> &intersections, std::vector<std::shared_ptr<Vehicle>> &vehicles, std::string &filename, int nVehicles)
+void createTrafficObjects_Paris(std::vector<std::shared_ptr<Street>> &streets, std::vector<std::shared_ptr<Intersection>> &intersections, std::vector<std::shared_ptr<Vehicle>> &vehicles, std::string &filename, int nVehicles , Terminate * terminate)
 {
     filename = "../data/paris.jpg";
 
     int nIntersections = 9;
     for (size_t ni = 0; ni < nIntersections; ni++)
     {
-        intersections.push_back(std::make_shared<Intersection>());
+        intersections.push_back(std::make_shared<Intersection>(terminate));
     }
 
     intersections.at(0)->setPosition(130,428);
@@ -93,7 +94,7 @@ void createTrafficObjects_Paris(std::vector<std::shared_ptr<Street>> &streets, s
 
     for (size_t nv = 0; nv < nVehicles; nv++)
     {
-        vehicles.push_back(std::make_shared<Vehicle>());
+        vehicles.push_back(std::make_shared<Vehicle>(terminate));
         vehicles.at(nv)->setCurrentStreet(streets.at(nv));
         vehicles.at(nv)->setCurrentDestination(intersections.at(8));
     }
@@ -103,14 +104,17 @@ void createTrafficObjects_Paris(std::vector<std::shared_ptr<Street>> &streets, s
 /* Main function */
 int main()
 {
+    // std::unique_ptr<Graphics> graphics(new Graphics());
 
+    Terminate * terminate = new Terminate ;
     std::vector<std::shared_ptr<Street>> streets;
     std::vector<std::shared_ptr<Intersection>> intersections;
     std::vector<std::shared_ptr<Vehicle>> vehicles;
     std::string backgroundImg;
     int nVehicles = 6;
-    createTrafficObjects_Paris(streets, intersections, vehicles, backgroundImg, nVehicles);
-    // createTrafficObjects_NYC(streets, intersections, vehicles, backgroundImg, nVehicles);
+    std::cout << "a" << std::endl;
+    // createTrafficObjects_Paris(streets, intersections, vehicles, backgroundImg, nVehicles , terminate);
+    createTrafficObjects_NYC(streets, intersections, vehicles, backgroundImg, nVehicles);
 
 
     std::for_each(intersections.begin(), intersections.end(), [](std::shared_ptr<Intersection> &i) {
@@ -133,13 +137,15 @@ int main()
         trafficObjects.push_back(trafficObject);
     });
 
-    // std::unique_ptr<Graphics> graphics(new Graphics());
     Graphics * graphics = new Graphics;
+
     graphics->setBgFilename(backgroundImg);
     graphics->setTrafficObjects(trafficObjects);
+
     graphics->simulate();
 
-    delete graphics;
+    // delete graphics;
+    delete terminate;
 
     return 0;
 }

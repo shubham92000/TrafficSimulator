@@ -10,13 +10,19 @@ class Graphics
 {
 public:
     // constructor / desctructor
-    ~Graphics(){
-        std::cout << "Graphics destructor " << std::endl;
-    }
+    // ~Graphics(){
+    //     for(auto & tr : _trafficObjects){
+    //         std::cout  << tr.use_count() << std::endl;
+    //     }
+    //     std::cout << "Graphics destructor " << std::endl;
+    // }
 
     // getters / setters
     void setBgFilename(std::string filename) { _bgFilename = filename; }
-    void setTrafficObjects(std::vector<std::shared_ptr<TrafficObject>> &trafficObjects) { _trafficObjects = trafficObjects; };
+    void setTrafficObjects(std::vector<std::shared_ptr<TrafficObject>> &trafficObjects) 
+    {
+        _trafficObjects = std::move(trafficObjects); 
+    };
 
     // typical behaviour methods
     void simulate();
