@@ -71,7 +71,7 @@ void createTrafficObjects_Paris(std::vector<std::shared_ptr<Street>> &streets, s
     int nIntersections = 9;
     for (size_t ni = 0; ni < nIntersections; ni++)
     {
-        intersections.push_back(std::make_shared<Intersection>(terminate));
+        intersections.push_back(std::make_shared<Intersection>());
     }
 
     intersections.at(0)->setPosition(130,428);
