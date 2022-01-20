@@ -35,7 +35,7 @@ TrafficLight::TrafficLight()
 }
 
 
-TrafficLight::TrafficLight(Terminate * terminate)
+TrafficLight::TrafficLight(std::shared_ptr<Terminate> terminate)
 {
     _currentPhase = TrafficLightPhase::red;
     this->terminate = terminate ;
@@ -75,7 +75,7 @@ void TrafficLight::cycleThroughPhases()
         std::this_thread::sleep_for(std::chrono::milliseconds(1)) ;
 
         if(terminate->isTerminated()){
-            break ;
+            return ;
         }
 
         long timeSinceLastUpdate = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now() - lastUpdate).count();

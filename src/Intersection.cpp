@@ -48,16 +48,16 @@ Intersection::Intersection()
     _type = ObjectType::objectIntersection;
     _isBlocked = false;
     this->terminate = nullptr ;
-    _trafficLight = new TrafficLight() ;
+    _trafficLight = std::make_shared<TrafficLight>() ;
 }
 
 
-Intersection::Intersection(Terminate * terminate)
+Intersection::Intersection(std::shared_ptr<Terminate> terminate)
 {
     _type = ObjectType::objectIntersection;
     _isBlocked = false;
     this->terminate = terminate ;
-    _trafficLight = new TrafficLight(terminate) ;
+    _trafficLight = std::make_shared<TrafficLight>(terminate);
 }
 
 void Intersection::addStreet(std::shared_ptr<Street> street)

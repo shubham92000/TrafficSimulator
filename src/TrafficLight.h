@@ -33,9 +33,10 @@ class TrafficLight : public TrafficObject
 public:
     // constructor / desctructor
     TrafficLight() ;
-    TrafficLight(Terminate *) ;
+    TrafficLight(std::shared_ptr<Terminate>) ;
     ~TrafficLight(){
-        std::cout << "traffic light " << std::endl ;
+        std::unique_lock<std::mutex> lck(_mtx);
+        std::cout << "traffic light destructor " << std::endl ;
     } ;
 
     // getters / setters

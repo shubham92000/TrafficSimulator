@@ -14,7 +14,7 @@ Vehicle::Vehicle()
 }
 
 
-Vehicle::Vehicle(Terminate * terminate)
+Vehicle::Vehicle(std::shared_ptr<Terminate> terminate)
 {
     _currStreet = nullptr;
     _posStreet = 0.0;

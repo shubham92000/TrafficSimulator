@@ -11,9 +11,11 @@ class Graphics
 public:
     // constructor / desctructor
 
-    Graphics(){}
+    Graphics(){
+        this->terminate = nullptr;
+    }
 
-    Graphics(Terminate * terminate){
+    Graphics(std::shared_ptr<Terminate> terminate){
         this->terminate = terminate ;
     }
 
@@ -21,7 +23,8 @@ public:
         // for(auto & tr : _trafficObjects){
         //     std::cout  << tr.use_count() << std::endl;
         // }
-        std::cout << "Graphics destructor " << std::endl;
+        
+        // std::cout << "Graphics destructor " << std::endl;
     }
 
     // getters / setters
@@ -44,7 +47,7 @@ private:
     std::string _bgFilename;
     std::string _windowName;
     std::vector<cv::Mat> _images;
-    Terminate * terminate ;
+    std::shared_ptr<Terminate> terminate ;
 };
 
 #endif

@@ -12,6 +12,7 @@ public:
     // constructor / desctructor
     Street();
     ~Street(){
+        std::unique_lock<std::mutex> lck(_mtx);
         std::cout << "street destructor " << std::endl;
     };
 

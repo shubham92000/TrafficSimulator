@@ -32,5 +32,6 @@ TrafficObject::~TrafficObject()
     std::for_each(threads.begin(), threads.end(), [](std::thread &t) {
         t.join();
     });
+    std::unique_lock<std::mutex> lck(_mtx);
     std::cout << "TrafficObject destructor " << std::endl;
 }

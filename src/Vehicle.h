@@ -12,8 +12,9 @@ class Vehicle : public TrafficObject, public std::enable_shared_from_this<Vehicl
 public:
     // constructor / desctructor
     Vehicle();
-    Vehicle(Terminate *);
+    Vehicle(std::shared_ptr<Terminate>);
     ~Vehicle(){
+        std::unique_lock<std::mutex> lck(_mtx);
         std::cout << "vehicle destructor " << std::endl;
     };
 
