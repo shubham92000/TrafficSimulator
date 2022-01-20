@@ -60,18 +60,18 @@ Intersection::Intersection(std::shared_ptr<Terminate> terminate)
     _trafficLight = std::make_shared<TrafficLight>(terminate);
 }
 
-void Intersection::addStreet(std::shared_ptr<Street> street)
+void Intersection::addStreet(int street)
 {
     _streets.push_back(street);
 }
 
-std::vector<std::shared_ptr<Street>> Intersection::queryStreets(std::shared_ptr<Street> incoming)
+std::vector<int> Intersection::queryStreets(int incoming)
 {
     // store all outgoing streets in a vector ...
-    std::vector<std::shared_ptr<Street>> outgoings;
+    std::vector<int> outgoings;
     for (auto it : _streets)
     {
-        if (incoming->getID() != it->getID()) // ... except the street making the inquiry
+        if (incoming != it) // ... except the street making the inquiry
         {
             outgoings.push_back(it);
         }

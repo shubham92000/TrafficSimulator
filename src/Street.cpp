@@ -13,11 +13,11 @@ Street::Street()
 void Street::setInIntersection(std::shared_ptr<Intersection> in)
 {
     _interIn = in;
-    in->addStreet(get_shared_this()); // add this street to list of streets connected to the intersection
+    in->addStreet(this->getID()); // add this street to list of streets connected to the intersection
 }
 
 void Street::setOutIntersection(std::shared_ptr<Intersection> out)
 {
     _interOut = out;
-    out->addStreet(get_shared_this()); // add this street to list of streets connected to the intersection
+    out->addStreet(this->getID()); // add this street to list of streets connected to the intersection
 }

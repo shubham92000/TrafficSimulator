@@ -106,7 +106,7 @@ void Vehicle::drive()
             if (completion >= 1.0 && hasEnteredIntersection)
             {
                 // choose next street and destination
-                std::vector<std::shared_ptr<Street>> streetOptions = _currDestination->queryStreets(_currStreet);
+                std::vector<int> streetOptions = _currDestination->queryStreets(_currStreet->getID());
                 std::shared_ptr<Street> nextStreet;
                 if (streetOptions.size() > 0)
                 {
@@ -114,7 +114,8 @@ void Vehicle::drive()
                     std::random_device rd;
                     std::mt19937 eng(rd());
                     std::uniform_int_distribution<> distr(0, streetOptions.size() - 1);
-                    nextStreet = streetOptions.at(distr(eng));
+                    int nextStreetIdx = streetOptions.at(distr(eng));
+                    // nextStreet = 
                 }
                 else
                 {
