@@ -24,7 +24,7 @@ public:
         //     std::cout  << tr.use_count() << std::endl;
         // }
         
-        // std::cout << "Graphics destructor " << std::endl;
+        std::cout << "Graphics destructor " << std::endl;
     }
 
     // getters / setters

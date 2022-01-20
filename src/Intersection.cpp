@@ -142,7 +142,7 @@ void Intersection::processVehicleQueue()
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
         if(terminate->isTerminated()){
-            break ;
+            return ;
         }
 
         // only proceed when at least one vehicle is waiting in the queue

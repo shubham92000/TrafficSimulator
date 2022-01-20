@@ -64,14 +64,14 @@ void createTrafficObjects_NYC(std::vector<std::shared_ptr<Street>> &streets, std
 
 
 // Paris
-void createTrafficObjects_Paris(std::vector<std::shared_ptr<Street>> &streets, std::vector<std::shared_ptr<Intersection>> &intersections, std::vector<std::shared_ptr<Vehicle>> &vehicles, std::string &filename, int nVehicles , std::shared_ptr<Terminate> terminate)
+void createTrafficObjects_Paris(std::vector<std::shared_ptr<Street>> &streets, std::vector<std::shared_ptr<Intersection>> &intersections, std::vector<std::shared_ptr<Vehicle>> &vehicles, std::string &filename, int nVehicles , std::shared_ptr<Terminate> & terminate)
 {
     filename = "../data/paris.jpg";
 
     int nIntersections = 9;
     for (size_t ni = 0; ni < nIntersections; ni++)
     {
-        intersections.push_back(std::make_shared<Intersection>());
+        intersections.push_back(std::make_shared<Intersection>(terminate));
     }
 
     intersections.at(0)->setPosition(130,428);
@@ -107,7 +107,6 @@ int main()
     
     std::shared_ptr<Terminate> terminate(std::make_shared<Terminate>());
 
-    // std::shared_ptr<Graphics> graphics(std::make_shared<Graphics>());
 
     std::vector<std::shared_ptr<Intersection>> intersections;
     std::vector<std::shared_ptr<Street>> streets;
@@ -116,43 +115,46 @@ int main()
     int nVehicles = 6;
     
     createTrafficObjects_Paris(streets, intersections, vehicles, backgroundImg, nVehicles , terminate);
-    // // createTrafficObjects_NYC(streets, intersections, vehicles, backgroundImg, nVehicles);
+    // createTrafficObjects_NYC(streets, intersections, vehicles, backgroundImg, nVehicles);
+
+    std::cout << "intersections size : " << intersections.size() << std::endl;
+    std::cout << "streets size : " << streets.size() << std::endl;
+    std::cout << "vehicles size : " << vehicles.size() << std::endl;
 
 
-    // std::for_each(intersections.begin(), intersections.end(), [](std::shared_ptr<Intersection> &i) {
-    //     i->simulate();
-    // });
 
-    // std::for_each(vehicles.begin(), vehicles.end(), [](std::shared_ptr<Vehicle> &v) {
-    //     v->simulate();
-    // });
+    std::for_each(intersections.begin(), intersections.end(), [](std::shared_ptr<Intersection> &i) {
+        i->simulate();
+    });
 
 
-    // std::vector<std::shared_ptr<TrafficObject>> trafficObjects;
-    // std::for_each(intersections.begin(), intersections.end(), [&trafficObjects](std::shared_ptr<Intersection> &intersection) {
-    //     std::shared_ptr<TrafficObject> trafficObject = std::dynamic_pointer_cast<TrafficObject>(intersection);
-    //     trafficObjects.push_back(trafficObject);
-    // });
+    std::for_each(vehicles.begin(), vehicles.end(), [](std::shared_ptr<Vehicle> &v) {
+        v->simulate();
+    });
 
-    // std::for_each(vehicles.begin(), vehicles.end(), [&trafficObjects](std::shared_ptr<Vehicle> &vehicles) {
-    //     std::shared_ptr<TrafficObject> trafficObject = std::dynamic_pointer_cast<TrafficObject>(vehicles);
-    //     trafficObjects.push_back(trafficObject);
-    // });
 
-    // // std::cout << "traffic Objects : "  << trafficObjects.size() << std::endl;
-    // // std::for_each(trafficObjects.begin(), trafficObjects.end(), [](std::shared_ptr<TrafficObject> &trafficObject) {
-    // //     std::cout << trafficObject->getNumThreads() << std::endl;
-    // // });
+    std::vector<std::shared_ptr<TrafficObject>> trafficObjects;
+    std::for_each(intersections.begin(), intersections.end(), [&trafficObjects](std::shared_ptr<Intersection> &intersection) {
+        std::shared_ptr<TrafficObject> trafficObject = std::dynamic_pointer_cast<TrafficObject>(intersection);
+        trafficObjects.push_back(trafficObject);
+    });
 
-    // // Graphics * graphics = new Graphics(terminate);
+    std::for_each(vehicles.begin(), vehicles.end(), [&trafficObjects](std::shared_ptr<Vehicle> &vehicles) {
+        std::shared_ptr<TrafficObject> trafficObject = std::dynamic_pointer_cast<TrafficObject>(vehicles);
+        trafficObjects.push_back(trafficObject);
+    });
 
-    // graphics->setBgFilename(backgroundImg);
-    // graphics->setTrafficObjects(trafficObjects);
+    // Graphics * graphics = new Graphics(terminate);
+    std::shared_ptr<Graphics> graphics(std::make_shared<Graphics>(terminate));
 
-    // graphics->simulate();
+    std::cout << " terminate use count :  " << terminate.use_count() << std::endl ;
+    graphics->setBgFilename(backgroundImg);
+    graphics->setTrafficObjects(trafficObjects);
 
-    // // delete graphics;
-    // // delete terminate;
+    graphics->simulate();
+
+    // delete graphics;
+    // delete terminate;
 
     return 0;
 }

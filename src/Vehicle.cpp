@@ -60,7 +60,7 @@ void Vehicle::drive()
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
         if(terminate->isTerminated()){
-            break ;
+            return ;
         }
 
         // compute time difference to stop watch
