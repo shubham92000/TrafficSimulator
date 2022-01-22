@@ -117,9 +117,9 @@ int main()
     createTrafficObjects_Paris(streets, intersections, vehicles, backgroundImg, nVehicles , terminate);
     // createTrafficObjects_NYC(streets, intersections, vehicles, backgroundImg, nVehicles);
 
-    std::cout << "intersections size : " << intersections.size() << std::endl;
-    std::cout << "streets size : " << streets.size() << std::endl;
-    std::cout << "vehicles size : " << vehicles.size() << std::endl;
+    // std::cout << "intersections size : " << intersections.size() << std::endl;
+    // std::cout << "streets size : " << streets.size() << std::endl;
+    // std::cout << "vehicles size : " << vehicles.size() << std::endl;
 
 
 
@@ -147,11 +147,17 @@ int main()
     // Graphics * graphics = new Graphics(terminate);
     std::shared_ptr<Graphics> graphics(std::make_shared<Graphics>(terminate));
 
-    std::cout << " terminate use count :  " << terminate.use_count() << std::endl ;
+    // std::cout << " terminate use count :  " << terminate.use_count() << std::endl ;
     graphics->setBgFilename(backgroundImg);
     graphics->setTrafficObjects(trafficObjects);
 
     graphics->simulate();
+
+    for(auto & i : intersections){
+        for(auto & s : i->_streets){
+            s = nullptr ;
+        }
+    }
 
     // delete graphics;
     // delete terminate;
