@@ -71,9 +71,11 @@ std::vector<std::shared_ptr<Street>> Intersection::queryStreets(std::shared_ptr<
     std::vector<std::shared_ptr<Street>> outgoings;
     for (auto it : _streets)
     {
-        if (incoming->getID() != it->getID()) // ... except the street making the inquiry
-        {
-            outgoings.push_back(it);
+        if(std::shared_ptr<Street> temp = it.lock()){
+            if (incoming->getID() != temp->getID()) // ... except the street making the inquiry
+            {
+                outgoings.push_back(it.lock());
+            }
         }
     }
 
@@ -158,14 +160,9 @@ void Intersection::processVehicleQueue()
 }
 
 bool Intersection::trafficLightIsGreen()
-{
-   // please include this part once you have solved the final project tasks
-   
+{   
    if (_trafficLight->getCurrentPhase() == TrafficLightPhase::green)
        return true;
    else
-       return false;
-   
-
-//   return true; // makes traffic light permanently green
+       return false;  
 } 

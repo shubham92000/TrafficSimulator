@@ -20,8 +20,8 @@ public:
     double getLength() { return _length; }
     void setInIntersection(std::shared_ptr<Intersection> in);
     void setOutIntersection(std::shared_ptr<Intersection> out);
-    std::shared_ptr<Intersection> getOutIntersection() { return _interOut; }
-    std::shared_ptr<Intersection> getInIntersection() { return _interIn; }
+    std::shared_ptr<Intersection> getOutIntersection() { return _interOut.lock(); }
+    std::shared_ptr<Intersection> getInIntersection() { return _interIn.lock(); }
 
     // typical behaviour methods
 
@@ -30,7 +30,7 @@ public:
 
 private:
     double _length;                                    // length of this street in m
-    std::shared_ptr<Intersection> _interIn, _interOut; // intersections from which a vehicle can enter (one-way streets is always from 'in' to 'out')
+    std::weak_ptr<Intersection> _interIn, _interOut; // intersections from which a vehicle can enter (one-way streets is always from 'in' to 'out')
 };
 
 #endif

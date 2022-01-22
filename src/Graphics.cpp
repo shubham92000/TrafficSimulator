@@ -5,7 +5,7 @@
 #include "Graphics.h"
 #include "Intersection.h"
 
-void Graphics::simulate(std::vector<std::shared_ptr<Intersection>> &intersections)
+void Graphics::simulate()
 {
     this->loadBackgroundImg();
     while (cv::waitKey(33)!=27)
@@ -18,11 +18,6 @@ void Graphics::simulate(std::vector<std::shared_ptr<Intersection>> &intersection
     }
 
     terminate->TerminateProcess();
-    for(auto & i : intersections){
-        for(auto & s : i->_streets){
-            s = nullptr ;
-        }
-    }
 }
 
 void Graphics::loadBackgroundImg()

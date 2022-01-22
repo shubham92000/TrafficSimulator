@@ -63,7 +63,7 @@ private:
     std::shared_ptr<TrafficLight> _trafficLight;
 
 public: 
-    std::vector<std::shared_ptr<Street>> _streets;   // list of all streets connected to this intersection
+    std::vector<std::weak_ptr<Street>> _streets;   // list of all streets connected to this intersection
 };
 
 #endif

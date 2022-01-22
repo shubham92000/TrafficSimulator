@@ -26,9 +26,6 @@ public:
     void setPosition(double x, double y);
     void getPosition(double &x, double &y);
     ObjectType getType() { return _type; }
-    int getNumThreads(){
-        return threads.size() ;
-    }
 
     // typical behaviour methods
     virtual void simulate(){};

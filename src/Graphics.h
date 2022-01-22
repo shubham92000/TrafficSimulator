@@ -19,11 +19,7 @@ public:
         this->terminate = terminate ;
     }
 
-    ~Graphics(){
-        // for(auto & tr : _trafficObjects){
-        //     std::cout  << tr.use_count() << std::endl;
-        // }
-        
+    ~Graphics(){        
         std::cout << "Graphics destructor " << std::endl;
     }
 
@@ -35,7 +31,7 @@ public:
     };
 
     // typical behaviour methods
-    void simulate(std::vector<std::shared_ptr<Intersection>> &);
+    void simulate();
 
 private:
     // typical behaviour methods
