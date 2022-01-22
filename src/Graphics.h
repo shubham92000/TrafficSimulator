@@ -35,7 +35,7 @@ public:
     };
 
     // typical behaviour methods
-    void simulate();
+    void simulate(std::vector<std::shared_ptr<Intersection>> &);
 
 private:
     // typical behaviour methods
