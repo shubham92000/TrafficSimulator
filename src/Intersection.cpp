@@ -17,7 +17,7 @@ int WaitingVehicles::getSize()
     return _vehicles.size();
 }
 
-void WaitingVehicles::pushBack(std::shared_ptr<Vehicle> vehicle, std::promise<void> &&promise)
+void WaitingVehicles::pushBack(std::weak_ptr<Vehicle> vehicle, std::promise<void> &&promise)
 {
     std::lock_guard<std::mutex> lock(_mutex);
 
@@ -60,21 +60,21 @@ Intersection::Intersection(std::shared_ptr<Terminate> terminate)
     _trafficLight = std::make_shared<TrafficLight>(terminate);
 }
 
-void Intersection::addStreet(std::shared_ptr<Street> street)
+void Intersection::addStreet(std::weak_ptr<Street> street)
 {
     _streets.push_back(street);
 }
 
-std::vector<std::shared_ptr<Street>> Intersection::queryStreets(std::shared_ptr<Street> incoming)
+std::vector<std::weak_ptr<Street>> Intersection::queryStreets(std::weak_ptr<Street> incoming)
 {
     // store all outgoing streets in a vector ...
-    std::vector<std::shared_ptr<Street>> outgoings;
+    std::vector<std::weak_ptr<Street>> outgoings;
     for (auto it : _streets)
     {
         if(std::shared_ptr<Street> temp = it.lock()){
-            if (incoming->getID() != temp->getID()) // ... except the street making the inquiry
+            if (incoming.lock()->getID() != temp->getID()) // ... except the street making the inquiry
             {
-                outgoings.push_back(it.lock());
+                outgoings.push_back(it);
             }
         }
     }
@@ -83,11 +83,11 @@ std::vector<std::shared_ptr<Street>> Intersection::queryStreets(std::shared_ptr<
 }
 
 // adds a new vehicle to the queue and returns once the vehicle is allowed to enter
-void Intersection::addVehicleToQueue(std::shared_ptr<Vehicle> vehicle)
+void Intersection::addVehicleToQueue(std::weak_ptr<Vehicle> vehicle)
 {
-    std::unique_lock<std::mutex> lck(_mtx);
+    // std::unique_lock<std::mutex> lck(_mtx);
     // std::cout << "Intersection #" << _id << "::addVehicleToQueue: thread id = " << std::this_thread::get_id() << std::endl;
-    lck.unlock();
+    // lck.unlock();
 
     // add new vehicle to the end of the waiting line
     std::promise<void> prmsVehicleAllowedToEnter;
@@ -96,7 +96,7 @@ void Intersection::addVehicleToQueue(std::shared_ptr<Vehicle> vehicle)
 
     // wait until the vehicle is allowed to enter
     ftrVehicleAllowedToEnter.wait();
-    lck.lock();
+    // lck.lock();
     // std::cout << "Intersection #" << _id << ": Vehicle #" << vehicle->getID() << " is granted entry." << std::endl;
     
     // FP.6b : use the methods TrafficLight::getCurrentPhase and TrafficLight::waitForGreen to block the execution until the traffic light turns green.
@@ -104,10 +104,10 @@ void Intersection::addVehicleToQueue(std::shared_ptr<Vehicle> vehicle)
         _trafficLight->waitForGreen() ;
     }
 
-    lck.unlock();
+    // lck.unlock();
 }
 
-void Intersection::vehicleHasLeft(std::shared_ptr<Vehicle> vehicle)
+void Intersection::vehicleHasLeft(std::weak_ptr<Vehicle> vehicle)
 {
     //std::cout << "Intersection #" << _id << ": Vehicle #" << vehicle->getID() << " has left." << std::endl;
 

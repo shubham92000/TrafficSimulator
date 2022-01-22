@@ -18,10 +18,10 @@ public:
 
     // getters / setters
     double getLength() { return _length; }
-    void setInIntersection(std::shared_ptr<Intersection> in);
-    void setOutIntersection(std::shared_ptr<Intersection> out);
-    std::shared_ptr<Intersection> getOutIntersection() { return _interOut.lock(); }
-    std::shared_ptr<Intersection> getInIntersection() { return _interIn.lock(); }
+    void setInIntersection(std::weak_ptr<Intersection> in);
+    void setOutIntersection(std::weak_ptr<Intersection> out);
+    std::weak_ptr<Intersection> getOutIntersection() { return _interOut; }
+    std::weak_ptr<Intersection> getInIntersection() { return _interIn; }
 
     // typical behaviour methods
 

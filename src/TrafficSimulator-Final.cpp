@@ -126,24 +126,27 @@ int main()
         v->simulate();
     });
 
+    std::this_thread::sleep_for(std::chrono::seconds(10)) ;
+    terminate->TerminateProcess();
 
-    std::vector<std::shared_ptr<TrafficObject>> trafficObjects;
-    std::for_each(intersections.begin(), intersections.end(), [&trafficObjects](std::shared_ptr<Intersection> &intersection) {
-        std::shared_ptr<TrafficObject> trafficObject = std::dynamic_pointer_cast<TrafficObject>(intersection);
-        trafficObjects.push_back(trafficObject);
-    });
 
-    std::for_each(vehicles.begin(), vehicles.end(), [&trafficObjects](std::shared_ptr<Vehicle> &vehicles) {
-        std::shared_ptr<TrafficObject> trafficObject = std::dynamic_pointer_cast<TrafficObject>(vehicles);
-        trafficObjects.push_back(trafficObject);
-    });
+    // std::vector<std::shared_ptr<TrafficObject>> trafficObjects;
+    // std::for_each(intersections.begin(), intersections.end(), [&trafficObjects](std::shared_ptr<Intersection> &intersection) {
+    //     std::shared_ptr<TrafficObject> trafficObject = std::dynamic_pointer_cast<TrafficObject>(intersection);
+    //     trafficObjects.push_back(trafficObject);
+    // });
 
-    std::shared_ptr<Graphics> graphics(std::make_shared<Graphics>(terminate));
+    // std::for_each(vehicles.begin(), vehicles.end(), [&trafficObjects](std::shared_ptr<Vehicle> &vehicles) {
+    //     std::shared_ptr<TrafficObject> trafficObject = std::dynamic_pointer_cast<TrafficObject>(vehicles);
+    //     trafficObjects.push_back(trafficObject);
+    // });
 
-    graphics->setBgFilename(backgroundImg);
-    graphics->setTrafficObjects(trafficObjects);
+    // std::shared_ptr<Graphics> graphics(std::make_shared<Graphics>(terminate));
 
-    graphics->simulate();
+    // graphics->setBgFilename(backgroundImg);
+    // graphics->setTrafficObjects(trafficObjects);
+
+    // graphics->simulate();
 
 
     return 0;

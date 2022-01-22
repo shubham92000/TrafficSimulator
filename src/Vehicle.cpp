@@ -6,7 +6,6 @@
 
 Vehicle::Vehicle()
 {
-    _currStreet = nullptr;
     _posStreet = 0.0;
     _type = ObjectType::objectVehicle;
     _speed = 400; // m/s
@@ -16,7 +15,6 @@ Vehicle::Vehicle()
 
 Vehicle::Vehicle(std::shared_ptr<Terminate> terminate)
 {
-    _currStreet = nullptr;
     _posStreet = 0.0;
     _type = ObjectType::objectVehicle;
     _speed = 400; // m/s
@@ -24,7 +22,7 @@ Vehicle::Vehicle(std::shared_ptr<Terminate> terminate)
 }
 
 
-void Vehicle::setCurrentDestination(std::shared_ptr<Intersection> destination)
+void Vehicle::setCurrentDestination(std::weak_ptr<Intersection> destination)
 {
     // update destination
     _currDestination = destination;
@@ -71,12 +69,13 @@ void Vehicle::drive()
             _posStreet += _speed * timeSinceLastUpdate / 1000;
 
             // compute completion rate of current street
-            double completion = _posStreet / _currStreet->getLength();
+            std::shared_ptr<Street> tempCurrStreet = _currStreet.lock() ;
+            double completion = _posStreet / tempCurrStreet->getLength();
 
             // compute current pixel position on street based on driving direction
             std::shared_ptr<Intersection> i1, i2;
-            i2 = _currDestination;
-            i1 = i2->getID() == _currStreet->getInIntersection()->getID() ? _currStreet->getOutIntersection() : _currStreet->getInIntersection();
+            i2 = _currDestination.lock();
+            i1 = i2->getID() == tempCurrStreet->getInIntersection().lock()->getID() ? tempCurrStreet->getOutIntersection().lock() : tempCurrStreet->getInIntersection().lock();
 
             double x1, y1, x2, y2, xv, yv, dx, dy, l;
             i1->getPosition(x1, y1);
@@ -92,7 +91,7 @@ void Vehicle::drive()
             if (completion >= 0.9 && !hasEnteredIntersection)
             {
                 // request entry to the current intersection (using async)
-                auto ftrEntryGranted = std::async(&Intersection::addVehicleToQueue, _currDestination, get_shared_this());
+                auto ftrEntryGranted = std::async(&Intersection::addVehicleToQueue, i2, get_shared_this());
 
                 // wait until entry has been granted
                 ftrEntryGranted.get();
@@ -106,8 +105,8 @@ void Vehicle::drive()
             if (completion >= 1.0 && hasEnteredIntersection)
             {
                 // choose next street and destination
-                std::vector<std::shared_ptr<Street>> streetOptions = _currDestination->queryStreets(_currStreet);
-                std::shared_ptr<Street> nextStreet;
+                std::vector<std::weak_ptr<Street>> streetOptions = i2->queryStreets(tempCurrStreet);
+                std::weak_ptr<Street> nextStreet;
                 if (streetOptions.size() > 0)
                 {
                     // pick one street at random and query intersection to enter this street
@@ -122,11 +121,12 @@ void Vehicle::drive()
                     nextStreet = _currStreet;
                 }
                 
+                tempCurrStreet = nextStreet.lock() ;
                 // pick the one intersection at which the vehicle is currently not
-                std::shared_ptr<Intersection> nextIntersection = nextStreet->getInIntersection()->getID() == _currDestination->getID() ? nextStreet->getOutIntersection() : nextStreet->getInIntersection(); 
+                std::weak_ptr<Intersection> nextIntersection = tempCurrStreet->getInIntersection().lock()->getID() == i2->getID() ? tempCurrStreet->getOutIntersection() : tempCurrStreet->getInIntersection(); 
 
                 // send signal to intersection that vehicle has left the intersection
-                _currDestination->vehicleHasLeft(get_shared_this());
+                i2->vehicleHasLeft(get_shared_this());
 
                 // assign new street and destination
                 this->setCurrentDestination(nextIntersection);
