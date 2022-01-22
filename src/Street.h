@@ -13,7 +13,7 @@ public:
     Street();
     ~Street(){
         std::unique_lock<std::mutex> lck(_mtx);
-        std::cout << "street destructor " << std::endl;
+        std::cout << "street destructor " << this->getID() << std::endl;
     };
 
     // getters / setters

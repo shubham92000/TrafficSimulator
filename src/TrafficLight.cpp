@@ -58,13 +58,17 @@ TrafficLightPhase TrafficLight::getCurrentPhase()
 }
 
 void TrafficLight::simulate()
-{
+{   
     threads.emplace_back(std::thread(&TrafficLight::cycleThroughPhases,this)) ;
 }
 
 void TrafficLight::cycleThroughPhases()
 {
 
+    std::unique_lock<std::mutex> lck(_mtx);
+    std::cout << "TrafficLight #" << _id << "::simulate: thread id = " << std::this_thread::get_id() << std::endl;
+    lck.unlock();
+    
     std::chrono::time_point<std::chrono::system_clock> lastUpdate;  
 
     lastUpdate = std::chrono::system_clock::now();

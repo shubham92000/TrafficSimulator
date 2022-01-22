@@ -17,6 +17,7 @@ enum ObjectType
 class TrafficObject
 {
 public:
+
     // constructor / desctructor
     TrafficObject();
     ~TrafficObject();

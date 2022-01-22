@@ -71,9 +71,4 @@ void Graphics::drawTrafficObjects()
 
     // display background and overlay image
     cv::imshow(_windowName, _images.at(2));
-    // int key = cv::waitKey(33);
-
-    // if(key != -1){
-    //     std::cout << "key " <<  key << std::endl ;
-    // }
 }

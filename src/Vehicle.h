@@ -15,7 +15,7 @@ public:
     Vehicle(std::shared_ptr<Terminate>);
     ~Vehicle(){
         std::unique_lock<std::mutex> lck(_mtx);
-        std::cout << "vehicle destructor " << std::endl;
+        std::cout << "vehicle destructor " << this->getID() <<  std::endl;
     };
 
     // getters / setters

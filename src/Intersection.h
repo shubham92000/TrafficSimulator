@@ -38,7 +38,7 @@ public:
     Intersection(std::shared_ptr<Terminate>);
     ~Intersection(){
         std::unique_lock<std::mutex> lck(_mtx);
-        std::cout << "intersection destructor " << std::endl;
+        std::cout << "intersection destructor " << this->getID() << std::endl;
     };
 
     // getters / setters
